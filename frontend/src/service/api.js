@@ -12,8 +12,12 @@ export default (includeAuth = true) => {
     };
     if (includeAuth) {
         let currentUserString = window.localStorage.currentUser;
-        let currentUser = currentUserString ? JSON.parse(currentUserString) : "";
-        request.headers.Authorization = currentUser && currentUser.token;
+        if (localStorage.getItem("currentUser") !== null) {
+            let currentUser = currentUserString ? JSON.parse(currentUserString) : "";
+            if (currentUser !== null) {
+                request.headers.Authorization = "Basic " + currentUser.token;
+            }
+        }
     }
     return axios.create(request);
 };

@@ -1,4 +1,4 @@
-package service;
+package com.main.itmo.backend.security.service;
 
 
 import com.main.itmo.backend.DAO.UserRepository;

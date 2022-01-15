@@ -22,13 +22,14 @@ const getters = {
 const mutations = {
     LOGIN_USER: (state, payload) => {
         let {username, password, token} = payload;
+        console.log(token);
         state.username = username;
         state.password = password;
+        state.isAuthenticated = true;
         window.localStorage.currentUser = JSON.stringify({
             username,
             token
         });
-        state.isAuthenticated = true;
         router.push("/main");
     },
     LOGOUT_USER: state => {
@@ -54,30 +55,51 @@ const actions = {
                     toast.success("Successfully registered!");
                     toast.info("Now you should log in");
                     router.push("/account/login");
-                } else if (response.status === 409) {
-                    toast.error("Register denied.")
                 }
             })
-            .catch(err => {
-                toast.error("" +
-                    "Couldn't register: " + err.message);
+            .catch(error => {
+                if (error.response.status === 409) {
+                    toast.error("Register denied. User with same username exist!")
+                } else {
+                    toast.error("" +
+                        "Couldn't register: " + error.message);
+                }
             });
     },
     LOGIN: async (context, payload) => {
         let {token} = payload;
         api()
-            .post("/auth/sign_in", JSON.stringify(payload))
+            .post("/auth/sign_in", JSON.stringify(payload), {
+                headers: {
+                    'Authorization': 'Basic ' + token,
+                },
+                //JSON.stringify(payload))
+            })
             .then(response => {
                 if (response.status === 200) {
                     toast.success("Successfully logged in!");
                     context.commit("LOGIN_USER", payload);
-                } else if (response.status === 403) {
-                    toast.error("Bad login or password");
                 }
             })
-            .catch(() => {
-                toast.error("Wrong Credentials. Try Again!");
+            .catch((error) => {
+                if (error.response.status === 401) {
+                    toast.error("Bad login or password!");
+                } else {
+                    toast.error("Wrong Credentials. Try Again!");
+                }
             });
+    },
+    LOGOUT: async context => {
+        context.commit("LOGOUT_USER");
+        router.push("/account/login");
+    },
+    LOGIN_FROM_STORAGE: async () => {
+        if (localStorage.getItem("currentUser") !== null) {
+            let user = JSON.parse(window.localStorage.currentUser);
+            if (user) {
+                store.dispatch("LOGIN", user);
+            }
+        }
     }
 };
 export default {

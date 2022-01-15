@@ -3,10 +3,17 @@ import VueRouter from "vue-router"
 import Login from "../templates/Login"
 import About from "../templates/About";
 import Register from "../templates/Register";
+import Home from "../templates/Home";
+import Main from "../templates/Main";
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: Home
+  },
   {
     path: "/login",
     name: "login",
@@ -23,7 +30,12 @@ const routes = [
     component: Register
   },
   {
-    path: '*', redirect: '/login'
+    path: "/main",
+    name: "main",
+    component: Main
+  },
+  {
+    path: '*', redirect: '/'
   }
 ];
 

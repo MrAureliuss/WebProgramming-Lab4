@@ -96,6 +96,7 @@
                 let user = {
                     username: this.form.nickname,
                     password: this.form.password,
+                    token: window.btoa(this.form.nickname + ':' + this.form.password)
                 };
                 this.$store.dispatch("LOGIN", user);
             },
