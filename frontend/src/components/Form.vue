@@ -58,6 +58,7 @@
 <script>
     import {eventBus} from "../main";
     import {store} from "../store";
+    import entries, {state} from "../store/modules/entries"
 
     export default {
         data() {
@@ -94,13 +95,13 @@
                 return Boolean(this.selectedR);
             },
             stateY() {
-                return Boolean(this.selectedY) && +this.selectedY >= -3 && +this.selectedY <= 5;
+                return Boolean(this.selectedY) && +this.selectedY >= -5 && +this.selectedY <= 3;
             },
             invalidFeedbackY() {
                 if (this.selectedY === null) {
                     return ''
-                } else if (Boolean(this.selectedY) && (+this.selectedY < -3 || +this.selectedY > 5)) {
-                    return 'Enter number in range of -3..5'
+                } else if (Boolean(this.selectedY) && (+this.selectedY < -5 || +this.selectedY > 3)) {
+                    return 'Enter number in range of -5..3'
                 } else {
                     return 'Please enter a number'
                 }
@@ -124,10 +125,21 @@
                 }
             },
             changeR() {
+                state.entries.forEach(entry => entry.dotResult = computeNewResult(entry, this.selectedR));
                 eventBus.$emit("radiusChanged", 20 * this.selectedR);
             },
         }
     };
+    function computeNewResult(entry, r) {
+        let x = entry.x;
+        let y = entry.y;
+
+        let triangle = x <= 0 && y <= 0 && y >= -x-r/2;
+        let square = x >= 0 && y <= 0 && x <= r && y >= -r/2;
+        let sector = x <= 0 && y >= 0 && (x*x + y*y) <= r*r/4;
+
+        return triangle || square || sector;
+    }
 </script>
 
 <style scoped>

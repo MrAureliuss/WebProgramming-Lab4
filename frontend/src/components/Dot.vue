@@ -9,10 +9,12 @@
             dot: {type: Object},
             radius: {type: Number}
         },
-        methods: {},
+        methods: {
+        },
         computed: {
             color() {
-                let result = this.dot.result;
+                this.radius;    // FUCKING MAGIC
+                let result = this.dot.dotResult;
                 let green = "#4ced5c";
                 let red = "#ff564a";
                 if (result) {

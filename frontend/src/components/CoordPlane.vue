@@ -76,6 +76,7 @@
     import Dot from "./Dot.vue";
     import toast from "../lib/toast.js";
     import {store} from "../store";
+
     export default {
         name: "CoordPlane",
         props: {

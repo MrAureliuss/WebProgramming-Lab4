@@ -1,7 +1,7 @@
 import api from "../../service/api.js";
 import toast from "../../lib/toast.js";
 
-const state = {
+export const state = {
     entries: [],
     r: 1
 };
@@ -39,7 +39,8 @@ const actions = {
                     x: res.data.x,
                     y: res.data.y,
                     r: res.data.r,
-                    result: res.data.result
+                    result: res.data.result,
+                    dotResult: res.data.result // FOR DOT COLOR
                 };
                 if (entry.result) {
                     toast.success("Correct!");
@@ -49,8 +50,13 @@ const actions = {
 
                 context.commit("ADD_ENTRY", entry);
             })
-            .catch(err => {
-                toast.error(err.message);
+            .catch(error => {
+                if (error.response.status === 409) {
+                    toast.error(error.response.data)
+                } else {
+                    toast.error("" +
+                        "Couldn't register: " + error.message);
+                }
             });
     }
 };
@@ -59,5 +65,5 @@ export default {
     state,
     getters,
     mutations,
-    actions
+    actions,
 };

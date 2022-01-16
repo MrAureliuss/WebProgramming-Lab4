@@ -28,17 +28,14 @@
       </b-navbar>
     </b-row>
     <div class="col justify-content-center">
-<!--      <p></p>-->
-<!--      <p></p>-->
-<!--      <p></p>-->
-      <img src="../assets/avatar.png">
-      <p></p>
-      <p class="text-center">Вариант: 15123</p>
-      <p class="text-center">Выполнил: Симонян Эрик Самвелович</p>
-      <p class="text-center">Группа: P3215</p>
-      <p></p>
-      <a href="https://github.com/MrAureliuss" target="_blank"><img id="github_logo" src="../assets/githublogo.png"></a>
-      <p></p>
+        <a href="https://vk.com/eriksimohyan" target="_blank"><img src="../assets/avatar.png"></a>
+        <p></p>
+        <p class="text-center">Вариант: 15123</p>
+        <p class="text-center">Выполнил: Симонян Эрик Самвелович</p>
+        <p class="text-center">Группа: P3215</p>
+        <p></p>
+        <a href="https://github.com/MrAureliuss" target="_blank"><img id="github_logo" src="../assets/githublogo.png"></a>
+        <p></p>
     </div>
   </b-container>
 </template>

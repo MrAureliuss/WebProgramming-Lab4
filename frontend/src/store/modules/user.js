@@ -22,7 +22,6 @@ const getters = {
 const mutations = {
     LOGIN_USER: (state, payload) => {
         let {username, password, token} = payload;
-        console.log(token);
         state.username = username;
         state.password = password;
         state.isAuthenticated = true;
