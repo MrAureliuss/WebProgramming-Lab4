@@ -25,7 +25,7 @@ public class PointController {
     @PostMapping("/addEntry")
     ResponseEntity<?> newPoint(@RequestBody Point newPoint) {
         System.out.println("New point for " + newPoint.getUsername());
-        if (newPoint.getR() < 0 || newPoint.getR() > 5 || newPoint.getX() < -3 || newPoint.getX() > 5 || newPoint.getY() < -3 || newPoint.getY() > 5) {
+        if (newPoint.getR() <= 0 || newPoint.getR() > 5 || newPoint.getX() < -3 || newPoint.getX() > 5 || newPoint.getY() < -3 || newPoint.getY() > 5) {
             return new ResponseEntity<>("Radius must be positive or X {'-3','-2','-1','0','1','2','3','4','5'}, Y less than 3 and more than -5",
                     HttpStatus.CONFLICT);
         }

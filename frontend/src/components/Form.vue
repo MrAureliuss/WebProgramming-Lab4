@@ -59,6 +59,7 @@
     import {eventBus} from "../main";
     import {store} from "../store";
     import entries, {state} from "../store/modules/entries"
+    import toast from "../lib/toast.js";
 
     export default {
         data() {
@@ -78,6 +79,10 @@
                     {text: '5', value: '5'}
                 ],
                 optionsR: [
+                    {text: '-3', value: '-3'},
+                    {text: '-2', value: '-2'},
+                    {text: '-1', value: '-1'},
+                    {text: '0', value: '0'},
                     {text: '1', value: '1'},
                     {text: '2', value: '2'},
                     {text: '3', value: '3'},
@@ -125,6 +130,7 @@
                 }
             },
             changeR() {
+                if (this.selectedR <= 0) { toast.error("R must be positive!"); return; }
                 state.entries.forEach(entry => entry.dotResult = computeNewResult(entry, this.selectedR));
                 eventBus.$emit("radiusChanged", 20 * this.selectedR);
             },
